@@ -145,8 +145,36 @@ public class Checkout {
         //method action element
         overviewPage.clickFinishButton();
 
-        //assertion 16 : cek current URL apakah sudah sesuai dengan Your Complete Page
+        //assertion 16 : cek current URL apakah sudah sesuai dengan Complete Page
         Assert.assertEquals(completePage.getCurrentURL(),"https://www.saucedemo.com/checkout-complete.html");
+    }
+
+    @Test
+    public void e_completeTest(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        CompletePage completePage = new CompletePage(driver);
+        HomePage homePage = new HomePage(driver);
+
+        //explicit wait untuk menunggu element terlihat di layar
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-test='title']")));
+
+        //assertion 17 : cek dashboard teks apakah sudah sesuai dengan ekspektasi
+        Assert.assertEquals(completePage.getDashboardText(),"Checkout: Complete!");
+
+        //assertion 18 : cek apakah icon complete muncul
+        completePage.completeIconIsDisplayed();
+
+        //assertion 19 : cek apakah teks sudah sesuai
+        Assert.assertEquals(completePage.getThankYou_text(),"Thank you for your order!");
+
+        //assertion 20 : cek apakah teks deskripsi sudah sesuai
+        Assert.assertEquals(completePage.getDescription_text(),"Your order has been dispatched, and will arrive just as fast as the pony can get there!");
+
+        //method action element
+        completePage.clickBackButton();
+
+        //assertion 21 : cek current URL apakah sudah sesuai dengan URL Home Page
+        Assert.assertEquals(homePage.getCurrentURL(),"https://www.saucedemo.com/inventory.html");
     }
 
     @AfterClass
